@@ -1,0 +1,46 @@
+# ============================================================================
+# dsh-keyless-search — 免费联网搜索 / keyless web search
+# ============================================================================
+# 本插件的“挂载声明”。DSH 启动时按 bundle 层栈叠加各插件 patch：
+#
+#   1. 插入插件自身（id: keyless-search），并给出默认配置。
+#   2. 把 harness 默认搜索 provider 指向本插件的 `free` provider，
+#      于是内置 `web_search` 工具直接变成免 key 搜索。
+#
+# 注意：patch 的语义是“整行替换 config”，所以这里必须同时保留
+# fetchProvider: http —— 否则 web 行的 fetch provider 会被清空。
+#
+# 卸载本插件时，上述两层 patch 会自动回滚，web.searchProvider 恢复为
+# `deepseek-official`（DSH 自带）。
+# ============================================================================
+
+- insert:
+    - id: keyless-search
+      name: dsh-keyless-search
+      config:
+        # bing | baidu | so360 | bing-web | anysearch | exa | duckduckgo | ddg-lite
+        # | searxng | wikipedia | mojeek | tavily
+        # 自动模式下按 order 顺序尝试，失败的引擎自动降级到下一个。
+        primary: bing
+        order:
+          - bing
+          - baidu
+          - so360
+          - bing-web
+          - anysearch
+          - exa
+          - duckduckgo
+          - searxng
+          - wikipedia
+          - mojeek
+        maxResults: 8
+        timeoutMs: 12000
+        cacheTtlMs: 300000
+        region: zh-CN
+        lang: zh
+
+# 让内置 web_search 走本插件（免 key）。
+- id: web
+  config:
+    searchProvider: free
+    fetchProvider: http

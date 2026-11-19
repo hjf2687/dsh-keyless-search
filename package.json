@@ -1,0 +1,59 @@
+{
+  "name": "dsh-keyless-search",
+  "version": "1.1.4",
+  "description": "Keyless web search for DeepSeek Harness: a free multi-engine search provider (Bing / Baidu / 360 / DuckDuckGo / SearXNG / Wikipedia / Mojeek plus the AnySearch / Exa / Tavily anonymous APIs) with automatic fallback, caching, a free_search tool, a settings page and a result card. No API key, ever.",
+  "type": "module",
+  "main": "lib/plugin.js",
+  "exports": {
+    ".": "./lib/plugin.js",
+    "./client": "./lib/client.js",
+    "./engines": "./lib/engines.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "web-search",
+    "free",
+    "keyless",
+    "no-api-key",
+    "bing",
+    "baidu",
+    "duckduckgo",
+    "searxng",
+    "anysearch",
+    "exa",
+    "tavily"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-theme",
+        "@deepseek-ai/dsh-client-ui-tool"
+      ],
+      "external": [
+        "react",
+        "react/jsx-runtime"
+      ]
+    },
+    "engines": {
+      "dsh": ">=0.1.7-rc.1"
+    }
+  }
+}
