@@ -354,7 +354,7 @@ globalThis.fetch = async (url, options = {}) => {
 /* Load the bundle the way the client module system does                      */
 /* -------------------------------------------------------------------------- */
 
-await import(pathToFileURL('D:/tools/AI/DSH-plugins/dsh-keyless-search/lib/client.js').href);
+await import(pathToFileURL(new URL('../lib/client.js', import.meta.url).pathname).href);
 const registration = globalThis.window.__ModuleLoader__.captured;
 if (registration === null) {
   console.error('FAIL the bundle did not call window.__ModuleLoader__.load');
